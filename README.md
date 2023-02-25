@@ -1,4 +1,4 @@
-You can find the hsoted demo here (https://effervescent-bunny-8fdc51.netlify.app/)
+You can find the hosted demo here (https://effervescent-bunny-8fdc51.netlify.app/)
 
 # Getting Started with Create React App
 

@@ -21,7 +21,6 @@ const Contact = () => {
   };
 
   const handleSubmit = async (e) => {
-    console.log({ formDetails });
     e.preventDefault();
     if (
       formDetails.firstName === "" ||

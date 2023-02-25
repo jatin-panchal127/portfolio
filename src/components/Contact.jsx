@@ -32,7 +32,8 @@ const Contact = () => {
       return;
     else {
       setButtonText("Sending...");
-      let response = await fetch(`${data.protocol ?? "http"}://${data?.domain}:5000/contact`, {
+      const hostedDomain = process.env.DOMAIN
+      let response = await fetch(`${data.protocol ?? "http"}://${data.protocol ? hostedDomain : data?.domain}:5000/contact`, {
         method: "POST",
         headers: { "Content-Type": "application/json;charset=utf-8" },
         body: JSON.stringify(formDetails),

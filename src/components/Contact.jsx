@@ -32,7 +32,7 @@ const Contact = () => {
       return;
     else {
       setButtonText("Sending...");
-      const hostedDomain = process.env.DOMAIN
+      const hostedDomain = process.env.REACT_APP_DOMAIN
       let response = await fetch(`https://${hostedDomain}:5000/contact`, {
         method: "POST",
         headers: { "Content-Type": "application/json;charset=utf-8" },

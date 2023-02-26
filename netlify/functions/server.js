@@ -4,11 +4,11 @@ exports.handler = async (event) => {
   const gmailUsername = process.env.GMAILUSERNAME;
   const gmailPassword = process.env.GMAILPASSWORD;
   try {
-    const { fistname, lastname, email, phone, message } = JSON.parse(
+    const { firstName, lastName, email, phone, message } = JSON.parse(
       event.body
     );
 
-    const name = fistname + " " + lastname;
+    const name = firstName + " " + lastName;
 
     let contactEmail = nodemailer.createTransport({
       service: "gmail",

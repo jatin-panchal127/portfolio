@@ -2,10 +2,6 @@ const express = require("express");
 const router = express.Router();
 const cors = require("cors");
 const nodemailer = require("nodemailer");
-const dns = require("dns");
-const ip = require("ip");
-const fs = require("fs");
-const path = require("path");
 
 // server used to send send emails
 const app = express();
@@ -13,36 +9,6 @@ app.use(cors());
 app.use(express.json());
 require("dotenv").config();
 app.use("/", router);
-
-dns.reverse(ip.address(), (err, domains) => {
-  if (err) {
-    console.error(err);
-    const data = {
-      domain: "localhost",
-    };
-    fs.writeFile(
-      path.join("src", "utils", "domain.json"),
-      JSON.stringify(data),
-      (err) => {
-        if (err) throw err;
-        console.log("Domain is not configured, running locally!");
-      }
-    );
-  } else {
-    const data = {
-      protocol: "https",
-      domain: domains[0],
-    };
-    fs.writeFile(
-      path.join("src", "utils", "domain.json"),
-      JSON.stringify(data),
-      (err) => {
-        if (err) throw err;
-        console.log("Domain Found successfully!");
-      }
-    );
-  }
-});
 
 app.listen(5000, () => console.log("Server Running"));
 

@@ -32,8 +32,7 @@ const Contact = () => {
       return;
     else {
       setButtonText("Sending...");
-      const hostedDomain = process.env.REACT_APP_DOMAIN
-      let response = await fetch(`https://${hostedDomain}:5000/contact`, {
+      let response = await fetch("/.netlify/functions/server", {
         method: "POST",
         headers: { "Content-Type": "application/json;charset=utf-8" },
         body: JSON.stringify(formDetails),

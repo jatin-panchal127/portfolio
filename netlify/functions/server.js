@@ -11,7 +11,7 @@ exports.handler = async (event) => {
     const name = fistname + " " + lastname;
 
     let contactEmail = nodemailer.createTransport({
-      host: "gmail",
+      service: "gmail",
       auth: {
         user: gmailUsername,
         pass: gmailPassword,
@@ -31,9 +31,9 @@ exports.handler = async (event) => {
       to: gmailUsername,
       subject: "Contact Form Submission",
       html: `<p>Name: ${name}</p>
-							<p>Email: ${email}</p>
-							<p>Phone: ${phone}</p>
-							<p>Message: ${message}</p>`,
+           <p>Email: ${email}</p>
+           <p>Phone: ${phone}</p>
+           <p>Message: ${message}</p>`,
     });
 
     return {

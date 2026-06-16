@@ -10,23 +10,26 @@ export default function ParticleCanvas() {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+    const ctxRaw = canvas.getContext("2d");
+    if (!ctxRaw) return;
 
+    // Capture as non-null locals — TypeScript doesn't narrow across closure boundaries
+    const c = canvas;
+    const ctx: CanvasRenderingContext2D = ctxRaw;
     let rafId: number;
     const mouse = { x: -9999, y: -9999 };
     let dots: Dot[] = [];
 
     function init() {
-      const rect = canvas.getBoundingClientRect();
-      canvas.width = rect.width || canvas.offsetWidth;
-      canvas.height = rect.height || canvas.offsetHeight;
+      const rect = c.getBoundingClientRect();
+      c.width = rect.width || c.offsetWidth;
+      c.height = rect.height || c.offsetHeight;
       dots = [];
-      const n = Math.min(Math.floor((canvas.width * canvas.height) / 13000), 90);
+      const n = Math.min(Math.floor((c.width * c.height) / 13000), 90);
       for (let i = 0; i < n; i++) {
         dots.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
+          x: Math.random() * c.width,
+          y: Math.random() * c.height,
           vx: (Math.random() - 0.5) * 0.55,
           vy: (Math.random() - 0.5) * 0.55,
           r: Math.random() * 1.4 + 0.4,
@@ -36,7 +39,7 @@ export default function ParticleCanvas() {
     }
 
     function frame() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0, 0, c.width, c.height);
 
       for (const d of dots) {
         const dx = d.x - mouse.x;
@@ -49,8 +52,8 @@ export default function ParticleCanvas() {
         }
         d.vx *= 0.97;
         d.vy *= 0.97;
-        d.x = (d.x + d.vx + canvas.width) % canvas.width;
-        d.y = (d.y + d.vy + canvas.height) % canvas.height;
+        d.x = (d.x + d.vx + c.width) % c.width;
+        d.y = (d.y + d.vy + c.height) % c.height;
 
         ctx.beginPath();
         ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
@@ -78,7 +81,7 @@ export default function ParticleCanvas() {
     }
 
     function onMove(e: MouseEvent) {
-      const rect = canvas.getBoundingClientRect();
+      const rect = c.getBoundingClientRect();
       mouse.x = e.clientX - rect.left;
       mouse.y = e.clientY - rect.top;
     }
